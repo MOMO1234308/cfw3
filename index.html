@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABOQAMER | Loading...</title>
+    <style>
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+        }
+        
+        /* شاشة التحميل */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .letter-M {
+            color: #fff;
+            font-size: 120px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            animation: pulse 2s infinite, float 3s ease-in-out infinite;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
+        }
+        
+        .loading-bar-container {
+            width: 300px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        
+        .progress {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #fff, #aaa);
+            border-radius: 10px;
+            animation: load 5s linear forwards, rainbow 5s linear infinite;
+        }
+        
+        /* صفحة القمر */
+        .moon-page {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            overflow: hidden;
+            z-index: 900;
+        }
+        
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(white 1px, transparent 1px),
+                radial-gradient(white 1px, transparent 1px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+        }
+        
+        .moon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 150px;
+            height: 150px;
+            background: #f5f5f5;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 
+                0 0 60px 30px rgba(245, 245, 245, 0.3),
+                0 0 100px 60px rgba(245, 245, 245, 0.2),
+                0 0 140px 90px rgba(245, 245, 245, 0.1);
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+        
+        .info-box {
+            position: absolute;
+            top: 70%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 2px solid white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            color: white;
+            width: 300px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            animation: fadeIn 2s ease-out;
+        }
+        
+        .owner {
+            font-size: 24px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            text-shadow: 0 0 10px white;
+        }
+        
+        .co-owner {
+            font-size: 18px;
+            text-shadow: 0 0 5px white;
+        }
+        
+        /* Animations */
+        @keyframes load {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes rainbow {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 
+                0 0 60px 30px rgba(245, 245, 245, 0.3),
+                0 0 100px 60px rgba(245, 245, 245, 0.2),
+                0 0 140px 90px rgba(245, 245, 245, 0.1); }
+            to { box-shadow: 
+                0 0 80px 40px rgba(245, 245, 245, 0.4),
+                0 0 120px 80px rgba(245, 245, 245, 0.3),
+                0 0 160px 100px rgba(245, 245, 245, 0.2); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- شاشة التحميل -->
+    <div class="loading-screen">
+        <div class="letter-M">M</div>
+        <div class="loading-bar-container">
+            <div class="progress"></div>
+        </div>
+    </div>
+    
+    <!-- صفحة القمر -->
+    <div class="moon-page">
+        <div class="stars"></div>
+        <div class="moon"></div>
+        <div class="info-box">
+            <div class="owner">OWNER: ABOQAMER</div>
+            <div class="co-owner">CO OWNER: CHOJI</div>
+        </div>
+    </div>
+    
+    <script>
+        // الانتقال بعد 5 ثواني
+        setTimeout(function() {
+            document.querySelector('.loading-screen').style.display = 'none';
+            document.querySelector('.moon-page').style.display = 'block';
+            
+            // إضافة نجوم متحركة
+            const starsContainer = document.querySelector('.stars');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.style.position = 'absolute';
+                star.style.width = Math.random() * 3 + 'px';
+                star.style.height = star.style.width;
+                star.style.backgroundColor = 'white';
+                star.style.borderRadius = '50%';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.opacity = Math.random();
+                star.style.animation = `twinkle ${Math.random() * 5 + 3}s infinite alternate`;
+                
+                // أضف حركة للنجوم
+                const keyframes = `
+                    @keyframes twinkle {
+                        0% { opacity: ${Math.random()}; }
+                        50% { opacity: ${Math.random() + 0.5}; }
+                        100% { opacity: ${Math.random()}; }
+                    }
+                `;
+                const style = document.createElement('style');
+                style.innerHTML = keyframes;
+                document.head.appendChild(style);
+                
+                starsContainer.appendChild(star);
+            }
+        }, 5000);
+    </script>
+</body>
+</html>
